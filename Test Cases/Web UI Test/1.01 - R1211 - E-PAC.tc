@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>Vigência do Seguro - Validar Vigência futura de até 30 dias</description>
+   <name>1.01 - R1211 - E-PAC</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>7e0a5154-817e-4c20-b046-461a6d8bcc64</testCaseGuid>
+   <variable>
+      <defaultValue>'https://wwwi.br.intrallianz.com/drlf01/web/allianznet'</defaultValue>
+      <description></description>
+      <id>9cbbbf32-7195-43e5-b1b7-795e4684a661</id>
+      <masked>false</masked>
+      <name>sURL</name>
+   </variable>
+   <variable>
+      <defaultValue>'ba919190'</defaultValue>
+      <description></description>
+      <id>fbb8c514-2050-4b20-9cfe-9de47dd9645b</id>
+      <masked>false</masked>
+      <name>sUsuario</name>
+   </variable>
+   <variable>
+      <defaultValue>'Dxr1QqVWYO4f1hXm6pp8bQ=='</defaultValue>
+      <description></description>
+      <id>38cea546-c283-4aed-a6ec-dc3a75acf608</id>
+      <masked>false</masked>
+      <name>sSenha</name>
+   </variable>
+</TestCaseEntity>

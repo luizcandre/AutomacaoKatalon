@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description>Teste Roger</description>
+   <name>1.01 - R1211 - E-PAC2</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>bc8a96c5-eed5-4906-b7e3-e1f092065460</testCaseGuid>
+   <variable>
+      <defaultValue>'https://wwwi.br.intrallianz.com/drlf01/web/allianznet'</defaultValue>
+      <description></description>
+      <id>5d8337dd-025d-4a8a-89ca-7743e8ca2f89</id>
+      <masked>false</masked>
+      <name>sURLEpacAceitacao</name>
+   </variable>
+   <variable>
+      <defaultValue>'ba919190'</defaultValue>
+      <description></description>
+      <id>c436d694-6c35-4d2f-8289-d889e93b9020</id>
+      <masked>false</masked>
+      <name>sUser</name>
+   </variable>
+   <variable>
+      <defaultValue>'Dxr1QqVWYO4f1hXm6pp8bQ=='</defaultValue>
+      <description></description>
+      <id>2356bd4d-9e51-42c5-8f43-9020427f148e</id>
+      <masked>false</masked>
+      <name>sPasswd</name>
+   </variable>
+</TestCaseEntity>

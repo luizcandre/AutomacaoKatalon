@@ -1,0 +1,20 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://drswbo05.allianz.com.br/V1_00_00/ws" xmlns:sch="http://drswbo05.allianz.com.br/V1_00_00/schemas">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:dominioRequest>
+      <sch:autenticacao>
+            <sch:usuario>BA262880</sch:usuario>
+            <sch:parceiro>BP002617</sch:parceiro>
+            <sch:mediador>0617120</sch:mediador>
+         </sch:autenticacao>
+         <sch:dominios>
+            <!--1 or more repetitions:-->
+            <sch:codigoDominio>100008</sch:codigoDominio>
+            <sch:codigoDominio>100009</sch:codigoDominio>
+            <sch:codigoDominio>100010</sch:codigoDominio>
+            <sch:codigoDominio>100011</sch:codigoDominio>
+         </sch:dominios>
+         <sch:ramo>1211</sch:ramo>
+      </ws:dominioRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

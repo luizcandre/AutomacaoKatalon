@@ -1,0 +1,63 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://drswbo05.allianz.com.br/V1_00_00/ws" xmlns:sch="http://drswbo05.allianz.com.br/V1_00_00/schemas">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:cotacaoRequest>
+         <sch:autenticacao>
+            <sch:usuario>BA262880</sch:usuario>
+            <sch:parceiro>BP002617</sch:parceiro>
+            <sch:mediador>0617120</sch:mediador>
+         </sch:autenticacao>
+         <sch:dadosFiscais>
+            <sch:isentoIOF>false</sch:isentoIOF>
+         </sch:dadosFiscais>
+         <sch:dadosGerais>
+            <sch:dataInicio>2019-03-11</sch:dataInicio>
+            <sch:percentualComissao>30</sch:percentualComissao>
+            <sch:agravoDesconto>
+               <sch:percentualDesconto>20</sch:percentualDesconto>
+            </sch:agravoDesconto>
+         </sch:dadosGerais>
+         <sch:dadosRisco>
+            <sch:nomeTomador>ADEMILSON APARECIDO DE SOUZA</sch:nomeTomador>
+            <sch:documentoTomador>15634766818</sch:documentoTomador>
+            <sch:nomeCondutor>CARLA CAVALCANTE</sch:nomeCondutor>
+            <sch:documentoCondutor>31797313894</sch:documentoCondutor>
+            <sch:dataNascimento>1974-06-17</sch:dataNascimento>
+         </sch:dadosRisco>
+<sch:veiculo>
+            <sch:chassi>9BRBL3HE6K0175835</sch:chassi>
+            <sch:anoModelo>2019</sch:anoModelo>
+            <sch:situacaoVeiculo>
+               <sch:usado>
+                  <sch:isVeiculoUsado>true</sch:isVeiculoUsado>
+                  <sch:placa>PEA1635</sch:placa>
+               </sch:usado>
+            </sch:situacaoVeiculo>
+            <sch:codigoMarcaModelo>48811167</sch:codigoMarcaModelo>
+            <sch:codigoFipe>0021393</sch:codigoFipe>
+            <sch:percentualFipe>100</sch:percentualFipe>
+            <sch:cepPernoite>95625000</sch:cepPernoite>
+            <sch:tipoFranquia>REDUZIDA</sch:tipoFranquia>
+            <sch:dispositivoAtual>200</sch:dispositivoAtual>
+            <sch:veiculoBlindado>false</sch:veiculoBlindado>
+            <sch:despesasExtraordinarias>false</sch:despesasExtraordinarias>
+ </sch:veiculo>
+
+         <sch:ramo>
+            <sch:auto>
+               <sch:categoriaRisco>261</sch:categoriaRisco>
+               <sch:questionario>
+                  <sch:sexo>FEMININO</sch:sexo>
+                  <sch:estadoCivil>210</sch:estadoCivil>
+                  <sch:tempoHabilitacao>941</sch:tempoHabilitacao>
+                  <sch:existeMenor25anos>1225</sch:existeMenor25anos>
+                  <sch:garagemFaculdade>250</sch:garagemFaculdade>
+                  <sch:garagemResidencia>232</sch:garagemResidencia>
+                  <sch:garagemTrabalho>240</sch:garagemTrabalho>
+                  <sch:condutorPrincipalResideEm>270</sch:condutorPrincipalResideEm>
+               </sch:questionario>
+            </sch:auto>
+         </sch:ramo>
+      </ws:cotacaoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

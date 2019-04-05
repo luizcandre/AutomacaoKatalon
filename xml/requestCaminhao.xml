@@ -1,0 +1,53 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://drswbo05.allianz.com.br/V1_00_00/ws" xmlns:sch="http://drswbo05.allianz.com.br/V1_00_00/schemas">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:efetivacaoRequest>
+         <sch:autenticacao>
+            <sch:usuario>BA262880</sch:usuario>
+            <sch:parceiro>BP002617</sch:parceiro>
+            <sch:mediador>0617120</sch:mediador>
+         </sch:autenticacao>
+         <sch:operacao>24531442</sch:operacao>
+         <sch:efetivacao>
+            <sch:dadosPagamento>
+               <sch:boletoBancario>
+                  <sch:codigoPacoteSelecionado>0034</sch:codigoPacoteSelecionado>
+                  <sch:diaPagamento>30</sch:diaPagamento>
+                  <sch:quantidadeParcelas>6</sch:quantidadeParcelas>
+               </sch:boletoBancario>
+            </sch:dadosPagamento>
+            <sch:dadosEnderecoTomador>
+               <sch:tipoEndereco>RESIDENCIAL</sch:tipoEndereco>
+               <sch:tipoLogradouro>R.</sch:tipoLogradouro>
+               <sch:logradouro>DOS CACIQUES</sch:logradouro>
+               <sch:numero>21</sch:numero>
+               <sch:cep>04145000</sch:cep>
+               <sch:bairro>VILA DA SAÚDE</sch:bairro>
+            </sch:dadosEnderecoTomador>
+            <sch:outrosDados>
+               <!--You have a CHOICE of the next 2 items at this level-->
+               <sch:dadosTomadorPF>
+                  <sch:dataNascimento>1950-07-03</sch:dataNascimento>
+                  <sch:sexo>MASCULINO</sch:sexo>
+                  <sch:estadoCivil>C</sch:estadoCivil>
+                  <sch:profissao>21</sch:profissao>
+                  <sch:telefone>9132497160</sch:telefone>
+                  <sch:rendaMensal>1</sch:rendaMensal>
+               </sch:dadosTomadorPF>
+            </sch:outrosDados>
+            <sch:dadosVeiculoEfetivacao>
+               <sch:chassi>95V3V8F5HJM000364</sch:chassi>
+               <sch:anoModelo>2018</sch:anoModelo>
+               <sch:situacaoVeiculoE>
+                  <sch:zeroKm>
+                     <sch:dataNotaFiscal>2019-02-20</sch:dataNotaFiscal>
+                     <sch:placa>GGL2729</sch:placa>
+                  </sch:zeroKm>
+               </sch:situacaoVeiculoE>
+               <sch:codigoMarcaModelo>27800067</sch:codigoMarcaModelo>
+               <sch:codigoFipe>0054836</sch:codigoFipe>
+            </sch:dadosVeiculoEfetivacao>
+         </sch:efetivacao>
+      </ws:efetivacaoRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
