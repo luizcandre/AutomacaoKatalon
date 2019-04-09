@@ -16,6 +16,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType
+
 import bean.Cobertura
 import bean.Pacote
 import bean.Proposta
@@ -55,8 +57,6 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 */
 	public static lerDataTable(DataTable data){
 		issue_info =  data.asMaps(String.class, String.class);
-
-		tablePacotes()
 		def ct = issue_info.get(0).get("CT")
 		createDiretory(createDiretorypath+issue_info.get(0).get("topico") )
 		createDocument(ct, pathEvidences+issue_info.get(0).get("topico"))
@@ -131,7 +131,6 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	}
 
 
-
 	public static selecionarPacotePorParcelaMotorCalcNovo(){
 		listMotorCalcNovo =	obterPacoteCoberturaList(issue_info.get(0).get("Pagamento"),issue_info.get(0).get("Parcela"))
 		mostraPacoteCoberturas(listMotorCalcNovo)
@@ -144,21 +143,25 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 		mostraPacoteCoberturas(listMotorCalcAntigo)
 	}
 
-	public static tablePacotes(){
-		//issue_info.get(0).get("topico"
 
-
+	/**
+	 * @author Luiz André
+	 * @param pacote
+	 * @param pagamento
+	 * @param parcela
+	 * @return Retorna o um boolean caso os valores passados por parametro, sejam iguais a tabela do BDD 
+	 */
+	public static boolean verificaDadosTable(String pacote, String pagamento, String parcela){
+		boolean aux = false
 		for(int i=0; i< issue_info.size(); i++){
-			
 			Map<String, String> mapa = issue_info.get(i)
-			for (String key : mapa.keySet()) {
-				//Capturamos o valor a partir da chave
-				String value = mapa.get(key);
-				
-				System.out.println(key + " = " + value);
+			if(pacote.equals(mapa.get("Pacote")) && pagamento.equals(mapa.get("Pagamento")) && parcela.equals(mapa.get("Parcela"))){
+				System.out.println("Pacote"+ " = " + mapa.get("Pacote") + "| Forma de Pagamento: "+ mapa.get("Pagamento")+ "| Parcela: "+ mapa.get("Parcela"));
+				aux = true
 			}
 		}
 
+		return aux;
 	}
 
 
@@ -281,7 +284,7 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 					}
 				}
 
-				if(pacote.getFormaPagamento().equals(pagamento) && pacote.getQuantidadeParcelas().equals(parcela)) {
+				if(verificaDadosTable(pacote.getDescricaoPacote(), pacote.getFormaPagamento(), pacote.getQuantidadeParcelas()) == true){
 					listPacote.add(pacote);
 				}
 			}
