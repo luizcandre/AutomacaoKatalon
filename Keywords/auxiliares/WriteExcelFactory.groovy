@@ -20,13 +20,13 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.DataFormatter
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-
-
+import org.stringtemplate.v4.compiler.STParser.ifstat_return
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
@@ -163,7 +163,7 @@ public class WriteExcelFactory extends FileInput{
 				casodeteste.setExecutar(cellValidation.cellValidation(rw.getCell(42)));
 			}
 
-          
+
 			closeFileInputStream();
 			workbook.finalize()
 		} catch (FileNotFoundException e) {
@@ -332,7 +332,160 @@ public class WriteExcelFactory extends FileInput{
 
 
 
+	public static List<CasoDeTeste> readExcelFileToObjectCasoDeTeste(String caminho_arquivo_xlsx){
+
+		List<CasoDeTeste> listCasoDeTeste = new ArrayList<CasoDeTeste>();
+		String filePath = "C:\\Users\\Public\\QA_ALLIANZ\\xml\\massa_xml.xlsx";
+		try{
+			// Abrindo o arquivo e recuperando a planilha
+			FileInputStream file = new FileInputStream(new File(filePath));
+			XSSFWorkbook workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<?> rowIterator = sheet.rowIterator();
+			while (rowIterator.hasNext()) {
+				Row row = (Row) rowIterator.next();
+				// Descantando a primeira linha com o header
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+					Iterator<?> cellIterator = row.cellIterator();
+					CasoDeTeste casoDeTeste = new CasoDeTeste();
+
+					while (cellIterator.hasNext()) {
+
+						Cell cell = (Cell) cellIterator.next();
+						cell.setCellType(cell.CELL_TYPE_STRING);
+
+						switch (cell.getColumnIndex()) {
+							case 0:
+								casoDeTeste.setUsuario(cell.getStringCellValue());
+								break;
+							case 1:
+								casoDeTeste.setParceiro(cell.getStringCellValue());
+								break;
+							case 2:
+								casoDeTeste.setMediador(cell.getStringCellValue());
+								break;
+							case 3:
+								casoDeTeste.setIsentoIOF(cell.getStringCellValue());
+								break;
+							case 4:
+								casoDeTeste.setDataInicio(cell.getStringCellValue());
+								break;
+							case 5:
+								casoDeTeste.setPercentualComissao(cell.getStringCellValue());
+								break;
+							case 6:
+								casoDeTeste.setPercentualDesconto(cell.getStringCellValue());
+								break;
+							case 7:
+								casoDeTeste.setNomeTomador(cell.getStringCellValue());
+								break;
+							case 8:
+								casoDeTeste.setDocumentoTomador(cell.getStringCellValue());
+								break;
+							case 9:
+								casoDeTeste.setNomeCondutor(cell.getStringCellValue());
+								break;
+							case 10:
+								casoDeTeste.setDocumentoCondutor(cell.getStringCellValue());
+								break;
+							case 11:
+								casoDeTeste.setDataNascimento(cell.getStringCellValue());
+								break;
+							case 12:
+								casoDeTeste.setChassi(cell.getStringCellValue());
+								break;
+							case 13:
+								casoDeTeste.setAnoModelo(cell.getStringCellValue());
+								break;
+							case 14:
+								casoDeTeste.setIsVeiculoUsado(cell.getStringCellValue());
+								break;
+							case 15:
+								casoDeTeste.setPlaca(cell.getStringCellValue());
+								break;
+
+							case 16:
+								casoDeTeste.setCodigoMarcaModelo(cell.getStringCellValue());
+								break;
+							case 17:
+								casoDeTeste.setCodigoFipe(cell.getStringCellValue());
+								break;
+							case 18:
+								casoDeTeste.setPercentualFipe(cell.getStringCellValue());
+								break;
+							case 19:
+								casoDeTeste.setCepPernoite(cell.getStringCellValue());
+								break;
+							case 20:
+								casoDeTeste.setTipoFranquia(cell.getStringCellValue());
+								break;
+							case 21:
+								casoDeTeste.setDispositivoAtual(cell.getStringCellValue());
+								break;
+							case 22:
+								casoDeTeste.setVeiculoBlindado(cell.getStringCellValue());
+								break;
+							case 23:
+								casoDeTeste.setDespesasExtraordinarias(cell.getStringCellValue());
+								break;
+							case 24:
+								casoDeTeste.setCategoriaRisco(cell.getStringCellValue());
+								break;
+							case 25:
+								casoDeTeste.setSexo(cell.getStringCellValue());
+								break;
+							case 26:
+								casoDeTeste.setEstadoCivil(cell.getStringCellValue());
+								break;
+							case 27:
+								casoDeTeste.setTempoHabilitacao(cell.getStringCellValue());
+								break;
+							case 28:
+								casoDeTeste.setExisteMenor25anos(cell.getStringCellValue());
+								break;
+							case 29:
+								casoDeTeste.setGaragemFaculdade(cell.getStringCellValue());
+								break;
+							case 30:
+								casoDeTeste.setGaragemResidencia(cell.getStringCellValue());
+								break;
+							case 31:
+								casoDeTeste.setGaragemTrabalho(cell.getStringCellValue());
+								break;
+							case 32:
+								casoDeTeste.setCondutorPrincipalResideEm(cell.getStringCellValue());
+								break;
+						}
+					
+
+
+
+					}
+					listCasoDeTeste.add(casoDeTeste);
+			}
+
+
+			file.close();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		//listCasoDeTeste.remove(0);
+		return listCasoDeTeste;
+	}
+
+
+
+
+
 	public static testaMetodo(){
 		updateSheetLine(116, "C://Users//Public//QA_ALLIANZ//MassaAuto//MassaAutoAllianz.xlsx", "TEST CELL VALUE", 40)
 	}
 }
+
+
+
+

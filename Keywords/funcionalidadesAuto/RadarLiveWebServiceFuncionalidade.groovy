@@ -17,7 +17,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType
-
+import bean.CasoDeTeste
 import bean.Cobertura
 import bean.Pacote
 import bean.Proposta
@@ -25,6 +25,7 @@ import commands.AutoComandos
 import io.cucumber.datatable.DataTable
 import webservice.AutomacaoException
 import webservice.CotacaoWebService
+import webservice.CreateXml
 import webservice.MessagesFactory
 import webservice.RequestSoap
 import webservice.WebServiceError
@@ -72,6 +73,25 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 		responseSoap(pathXML+issue_info.get(0).get("Diretório"), issue_info.get(0).get("URL"))
 		salvarXmlResponse(issue_info.get(0).get("CT"),pathEvidences)
 	}
+
+
+
+	public static realizaLeituraPlanilha(){
+		List<CasoDeTeste> listCasoDeTeste = auxiliares.WriteExcelFactory.readExcelFileToObjectCasoDeTeste(pathXML+issue_info.get(0).get("Diretório"));
+		for(int i=0; i<listCasoDeTeste.size();i++){
+			String request = auxiliares.CreateXMLRadarLive.createXmlRadarLiveRequest(listCasoDeTeste.get(i))
+			responseSoap = RequestSoap.requestStringXml(request, issue_info.get(0).get("URL"))
+			selecionarPacotePorParcelaMotorCalcAntigo()
+			responseSoap = RequestSoap.requestStringXml(request, issue_info.get(1).get("URL"))
+			selecionarPacotePorParcelaMotorCalcNovo()
+			validar()
+			
+		}
+		
+	}
+
+
+
 
 	/**
 	 * Luiz

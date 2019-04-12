@@ -107,6 +107,7 @@
 	<classpathentry kind="lib" path="C:/Users/T_LCSAndre/Downloads/Katalon_Studio_Windows_32-5.10.1/Katalon_Studio_Windows_32-5.10.1/plugins/com.google.http-client.google-http-client_1.22.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Public/QA_ALLIANZ/Drivers/itextpdf-5.4.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Public/QA_ALLIANZ/Drivers/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Public/QA_ALLIANZ/Drivers/jdom-2.0.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Public/QA_ALLIANZ/Drivers/xstream.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry kind="output" path="bin"/>

@@ -1,5 +1,4 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://drswbo05.allianz.com.br/V1_00_00/ws" xmlns:sch="http://drswbo05.allianz.com.br/V1_00_00/schemas">
-   <soapenv:Header/>
    <soapenv:Body>
       <ws:cotacaoRequest>
          <sch:autenticacao>
@@ -22,9 +21,9 @@
             <sch:documentoTomador>15634766818</sch:documentoTomador>
             <sch:nomeCondutor>CARLA CAVALCANTE</sch:nomeCondutor>
             <sch:documentoCondutor>31797313894</sch:documentoCondutor>
-            <sch:dataNascimento>1974-06-17</sch:dataNascimento>
+            <sch:dataNascimento>1985-03-21</sch:dataNascimento>
          </sch:dadosRisco>
-<sch:veiculo>
+		<sch:veiculo>
             <sch:chassi>9BRBL3HE6K0175835</sch:chassi>
             <sch:anoModelo>2019</sch:anoModelo>
             <sch:situacaoVeiculo>
@@ -41,8 +40,7 @@
             <sch:dispositivoAtual>200</sch:dispositivoAtual>
             <sch:veiculoBlindado>false</sch:veiculoBlindado>
             <sch:despesasExtraordinarias>false</sch:despesasExtraordinarias>
- </sch:veiculo>
-
+		</sch:veiculo>
          <sch:ramo>
             <sch:auto>
                <sch:categoriaRisco>261</sch:categoriaRisco>

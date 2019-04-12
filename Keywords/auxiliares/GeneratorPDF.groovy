@@ -603,11 +603,18 @@ public class GeneratorPDF {
 
 		table.addCell(new Paragraph("Prêmio Líquido", smallBoldBlack))
 
-			for(int i = 0; i<listCotacao.size();i++){
-	
-					table.addCell(new Paragraph("R\044 " + String.format("%.2f", listCotacao.get(i).getTotalPremioCobertura()),smallListBlack))
-			}
-		
+		for(int i = 0; i<listCotacao.size();i++){
+
+			table.addCell(new Paragraph("R\044 " + String.format("%.2f", listCotacao.get(i).getTotalPremioCobertura()),smallListBlack))
+		}
+
+		table.addCell(new Paragraph("Valor IOF", smallBoldBlack))
+
+		for(int i = 0; i<listCotacao.size();i++){
+
+			table.addCell(new Paragraph("R\044 " + listCotacao.get(i).getValorIof(),smallListBlack))
+		}
+
 
 		document.add(table);
 	}

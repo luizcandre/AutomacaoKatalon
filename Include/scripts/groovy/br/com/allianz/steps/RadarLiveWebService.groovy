@@ -61,34 +61,36 @@ class RadarLiveWebService {
 
 	@And('realizo requests no WebService no motor de Calculo Antigo')
 	def realizoRequestTestAntigo(){
-		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.solicitaRequestMotorCalcAntigo()
+		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.realizaLeituraPlanilha()
+		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.finalizarDocumento()
+		//funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.solicitaRequestMotorCalcAntigo()
 	}
 
-	@And('obtenho os dados do WebService antigo')
-	def obterDadosAntigo(){
-		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.selecionarPacotePorParcelaMotorCalcAntigo()
-		//	funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.pegarPacoteCoberturaList()
-	}
-
-	@And('realizo requests no WebService no motor de Calculo Novo')
-	def realizoRequestTestNovo(){
-		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.solicitaRequestMotorCalcNovo()
-	}
-
-	@And('obtenho os dados do WebService Novo')
-	def obterDadosNovo(){
-		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.selecionarPacotePorParcelaMotorCalcNovo()
-	}
-
-	@Then('verifico se não existem diferenças no cálculo dos pacotes no documento xml respota do web service.')
-	def validaPacotesMotorAntigoENovo(){
-		if(funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.validar()){
-			KeywordUtil.markFailed("Ocorreu um erro na validação dos dados")
-		}
-	}
-
-	@And('finaliza a automação')
-	def finalizaAutomacao(){
-		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.finalizar()
-	}
+	//	@And('obtenho os dados do WebService antigo')
+	//	def obterDadosAntigo(){
+	//		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.selecionarPacotePorParcelaMotorCalcAntigo()
+	//		//	funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.pegarPacoteCoberturaList()
+	//	}
+	//
+	//	@And('realizo requests no WebService no motor de Calculo Novo')
+	//	def realizoRequestTestNovo(){
+	//		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.solicitaRequestMotorCalcNovo()
+	//	}
+	//
+	//	@And('obtenho os dados do WebService Novo')
+	//	def obterDadosNovo(){
+	//		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.selecionarPacotePorParcelaMotorCalcNovo()
+	//	}
+	//
+	//	@Then('verifico se não existem diferenças no cálculo dos pacotes no documento xml respota do web service.')
+	//	def validaPacotesMotorAntigoENovo(){
+	//		if(funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.validar()){
+	//			KeywordUtil.markFailed("Ocorreu um erro na validação dos dados")
+	//		}
+	//	}
+	//
+	//	@And('finaliza a automação')
+	//	def finalizaAutomacao(){
+	//		funcionalidadesAuto.RadarLiveWebServiceFuncionalidades.finalizar()
+	//	}
 }

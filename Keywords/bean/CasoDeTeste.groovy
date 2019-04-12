@@ -45,6 +45,294 @@ public class CasoDeTeste {
 	private  String numCpfCondutor
 	private  String nomeCpfCondutor
 
+
+	//Atributos do RadarLiveWS
+	//private String ct;
+
+	private String parceiro;
+	private String mediador;
+	private String isentoIOF;
+	private String dataInicio;
+	private String percentualComissao;
+	private String percentualDesconto;
+	private String nomeTomador;
+	private String documentoTomador;
+	private String nomeCondutor;
+	private String documentoCondutor;
+	private String dataNascimento;
+	private String chassi;
+	private String anoModelo;
+	private String isVeiculoUsado;
+
+	private String codigoMarcaModelo;
+	private String codigoFipe;
+	private String percentualFipe;
+	private String cepPernoite;
+	private String tipoFranquia;
+	private String dispositivoAtual;
+	private String veiculoBlindado;
+	private String despesasExtraordinarias;
+	private String categoriaRisco;
+	private String sexo;
+
+	private String tempoHabilitacao;
+	private String existeMenor25anos;
+	private String garagemFaculdade;
+	private String garagemResidencia;
+	private String garagemTrabalho;
+	private String condutorPrincipalResideEm;
+	// ===================
+
+
+	// Novo Metodos
+
+
+	
+	
+		public String getParceiro() {
+			return parceiro;
+		}
+	
+		public void setParceiro(String parceiro) {
+			this.parceiro = parceiro;
+		}
+	
+		public String getMediador() {
+			return mediador;
+		}
+	
+		public void setMediador(String mediador) {
+			this.mediador = mediador;
+		}
+	
+		public String getIsentoIOF() {
+			return isentoIOF;
+		}
+	
+		public void setIsentoIOF(String isentoIOF) {
+			this.isentoIOF = isentoIOF;
+		}
+	
+		public String getDataInicio() {
+			return dataInicio;
+		}
+	
+		public void setDataInicio(String dataInicio) {
+			this.dataInicio = dataInicio;
+		}
+	
+		public String getPercentualComissao() {
+			return percentualComissao;
+		}
+	
+		public void setPercentualComissao(String percentualComissao) {
+			this.percentualComissao = percentualComissao;
+		}
+	
+		public String getPercentualDesconto() {
+			return percentualDesconto;
+		}
+	
+		public void setPercentualDesconto(String percentualDesconto) {
+			this.percentualDesconto = percentualDesconto;
+		}
+	
+		public String getNomeTomador() {
+			return nomeTomador;
+		}
+	
+		public void setNomeTomador(String nomeTomador) {
+			this.nomeTomador = nomeTomador;
+		}
+	
+		public String getDocumentoTomador() {
+			return documentoTomador;
+		}
+	
+		public void setDocumentoTomador(String documentoTomador) {
+			this.documentoTomador = documentoTomador;
+		}
+	
+		public String getNomeCondutor() {
+			return nomeCondutor;
+		}
+	
+		public void setNomeCondutor(String nomeCondutor) {
+			this.nomeCondutor = nomeCondutor;
+		}
+	
+		public String getDocumentoCondutor() {
+			return documentoCondutor;
+		}
+	
+		public void setDocumentoCondutor(String documentoCondutor) {
+			this.documentoCondutor = documentoCondutor;
+		}
+	
+		public String getDataNascimento() {
+			return dataNascimento;
+		}
+	
+		public void setDataNascimento(String dataNascimento) {
+			this.dataNascimento = dataNascimento;
+		}
+	
+		public String getChassi() {
+			return chassi;
+		}
+	
+		public void setChassi(String chassi) {
+			this.chassi = chassi;
+		}
+	
+		public String getAnoModelo() {
+			return anoModelo;
+		}
+	
+		public void setAnoModelo(String anoModelo) {
+			this.anoModelo = anoModelo;
+		}
+	
+		public String getIsVeiculoUsado() {
+			return isVeiculoUsado;
+		}
+	
+		public void setIsVeiculoUsado(String isVeiculoUsado) {
+			this.isVeiculoUsado = isVeiculoUsado;
+		}
+	
+		public String getCodigoMarcaModelo() {
+			return codigoMarcaModelo;
+		}
+	
+		public void setCodigoMarcaModelo(String codigoMarcaModelo) {
+			this.codigoMarcaModelo = codigoMarcaModelo;
+		}
+	
+		public String getCodigoFipe() {
+			return codigoFipe;
+		}
+	
+		public void setCodigoFipe(String codigoFipe) {
+			this.codigoFipe = codigoFipe;
+		}
+	
+		public String getPercentualFipe() {
+			return percentualFipe;
+		}
+	
+		public void setPercentualFipe(String percentualFipe) {
+			this.percentualFipe = percentualFipe;
+		}
+	
+		public String getCepPernoite() {
+			return cepPernoite;
+		}
+	
+		public void setCepPernoite(String cepPernoite) {
+			this.cepPernoite = cepPernoite;
+		}
+	
+		public String getTipoFranquia() {
+			return tipoFranquia;
+		}
+	
+		public void setTipoFranquia(String tipoFranquia) {
+			this.tipoFranquia = tipoFranquia;
+		}
+	
+		public String getDispositivoAtual() {
+			return dispositivoAtual;
+		}
+	
+		public void setDispositivoAtual(String dispositivoAtual) {
+			this.dispositivoAtual = dispositivoAtual;
+		}
+	
+		public String getVeiculoBlindado() {
+			return veiculoBlindado;
+		}
+	
+		public void setVeiculoBlindado(String veiculoBlindado) {
+			this.veiculoBlindado = veiculoBlindado;
+		}
+	
+		public String getDespesasExtraordinarias() {
+			return despesasExtraordinarias;
+		}
+	
+		public void setDespesasExtraordinarias(String despesasExtraordinarias) {
+			this.despesasExtraordinarias = despesasExtraordinarias;
+		}
+	
+		public String getCategoriaRisco() {
+			return categoriaRisco;
+		}
+	
+		public void setCategoriaRisco(String categoriaRisco) {
+			this.categoriaRisco = categoriaRisco;
+		}
+	
+		public String getSexo() {
+			return sexo;
+		}
+	
+		public void setSexo(String sexo) {
+			this.sexo = sexo;
+		}
+	
+		public String getTempoHabilitacao() {
+			return tempoHabilitacao;
+		}
+	
+		public void setTempoHabilitacao(String tempoHabilitacao) {
+			this.tempoHabilitacao = tempoHabilitacao;
+		}
+	
+		public String getExisteMenor25anos() {
+			return existeMenor25anos;
+		}
+	
+		public void setExisteMenor25anos(String existeMenor25anos) {
+			this.existeMenor25anos = existeMenor25anos;
+		}
+	
+		public String getGaragemFaculdade() {
+			return garagemFaculdade;
+		}
+	
+		public void setGaragemFaculdade(String garagemFaculdade) {
+			this.garagemFaculdade = garagemFaculdade;
+		}
+	
+		public String getGaragemResidencia() {
+			return garagemResidencia;
+		}
+	
+		public void setGaragemResidencia(String garagemResidencia) {
+			this.garagemResidencia = garagemResidencia;
+		}
+	
+		public String getGaragemTrabalho() {
+			return garagemTrabalho;
+		}
+	
+		public void setGaragemTrabalho(String garagemTrabalho) {
+			this.garagemTrabalho = garagemTrabalho;
+		}
+	
+		public String getCondutorPrincipalResideEm() {
+			return condutorPrincipalResideEm;
+		}
+	
+		public void setCondutorPrincipalResideEm(String condutorPrincipalResideEm) {
+			this.condutorPrincipalResideEm = condutorPrincipalResideEm;
+		}
+
+
+	// ===================
+
+
 	private  String pacoteAmpliado1
 	private  String pacoteAmpliado2
 	private  String pacoteCompacto1

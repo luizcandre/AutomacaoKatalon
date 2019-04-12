@@ -77,4 +77,52 @@ public class RequestSoap {
 		//System.out.println(strResponde);
 		return strResponde;
 	}
+	
+	
+	
+	/**
+	 * Luiz
+	 * @param fileRequestXml
+	 * @param urlResquest
+	 * @return
+	 * @throws UnrecoverableKeyException
+	 * @throws KeyManagementException
+	 * @throws KeyStoreException
+	 * @throws NoSuchAlgorithmException
+	 * @throws CertificateException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws XMLStreamException
+	 * @throws JAXBException
+	 * Efetua 'request'
+	 */
+	public static String requestStringXml(String fileRequestXml, String urlResquest)
+			throws UnrecoverableKeyException, KeyManagementException, KeyStoreException, NoSuchAlgorithmException,
+	CertificateException, FileNotFoundException, IOException, XMLStreamException, JAXBException {
+
+		//Configura Valores de configuração de SSL
+		ConfigSsl setSsl = new ConfigSsl();
+
+		//Create a StringEntity
+		String bodyRequest = fileRequestXml;
+		StringEntity stringEntity = new StringEntity(bodyRequest, "UTF-8");
+		stringEntity.setChunked(true);
+
+		//Request Parameter
+		HttpPost httpPost = new HttpPost(urlResquest);
+		httpPost.setEntity(stringEntity);
+		httpPost.setHeader("Content-Type", "text/xml");
+		httpPost.setHeader("SOAPAction", "");
+
+
+		//HttpClient efetua o httpPost
+		httpClient = new DefaultHttpClient();
+		httpClient = HttpClients.custom().setSSLSocketFactory(setSsl.connectionSSL()).build();
+		HttpResponse response = httpClient.execute(httpPost);
+		HttpEntity entity = response.getEntity();
+		String strResponde = EntityUtils.toString(entity);
+		//Imprimi XMl
+		//System.out.println(strResponde);
+		return strResponde;
+	}
 }
