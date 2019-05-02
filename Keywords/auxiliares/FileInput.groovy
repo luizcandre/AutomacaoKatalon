@@ -21,7 +21,7 @@ import internal.GlobalVariable
 public class FileInput {
 
 	static FileInputStream file;
-	
+
 	/**
 	 * @author T_DCDias
 	 * @param caminho_arquivo_xlsx
@@ -34,14 +34,14 @@ public class FileInput {
 		return file;
 	}
 
-   /**
-    *@author T_DCDias 
-    * @throws IOException
-    */
+	/**
+	 *@author T_DCDias 
+	 * @throws IOException
+	 */
 	public static void closeFileInputStream() throws IOException {
 		file.close();
 	}
-	
+
 	/**
 	 * @author T_DCDias
 	 * @param fileRequestXml
@@ -53,15 +53,13 @@ public class FileInput {
 		BufferedReader br = new BufferedReader(new FileReader(new File(fileRequestXml)));
 		String line;
 		StringBuilder sb = new StringBuilder();
-			try {
-  				  while ((line = br.readLine()) != null) {
-						sb.append(line);
-				  }
-				  } catch (IOException e) {
-					e.printStackTrace();
-				  }
-	return sb.toString();
-  }
-	
-	
+		try {
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return sb.toString();
+	}
 }

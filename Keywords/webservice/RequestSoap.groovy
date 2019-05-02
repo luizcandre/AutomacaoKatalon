@@ -77,9 +77,9 @@ public class RequestSoap {
 		//System.out.println(strResponde);
 		return strResponde;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Luiz
 	 * @param fileRequestXml

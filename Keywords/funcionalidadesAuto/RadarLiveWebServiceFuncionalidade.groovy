@@ -17,6 +17,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType
+import com.kms.katalon.core.exception.StepFailedException
+
 import bean.CasoDeTeste
 import bean.Cobertura
 import bean.Pacote
@@ -48,6 +50,7 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	private static List<Pacote> listPacotesCoberturas = new ArrayList<Pacote>();
 	private static Pacote MotorCalcNovoCompacto1
 
+	private static List<CasoDeTeste> listCasoDeTestePlanilha;
 	private static List<Pacote> listMotorCalcAntigo;
 	private static List<Pacote> listMotorCalcNovo;
 
@@ -59,6 +62,49 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	public static lerDataTable(DataTable data){
 		issue_info =  data.asMaps(String.class, String.class);
 		def ct = issue_info.get(0).get("CT")
+		//		createDiretory(createDiretorypath+issue_info.get(0).get("topico") )
+		//		createDocument(ct, pathEvidences+issue_info.get(0).get("topico"))
+		//		createTitlePage()
+	}
+
+
+	public static realizaLeituraPlanilha(){
+		listCasoDeTestePlanilha = auxiliares.WriteExcelFactory.readExcelFileToObjectCasoDeTesteRenovaSeguro(pathXML+issue_info.get(0).get("Diretório"));
+		System.out.println("Total de Registros na planilha: "+ listCasoDeTestePlanilha.size())
+	}
+
+
+	public static loopDeRequestValidacao(){
+		for(int i=0; i<listCasoDeTestePlanilha.size();i++){
+
+			criaUmNovoDocumentoPdf(listCasoDeTestePlanilha.get(i).getCt())
+
+			String request = auxiliares.CreateXMLRadarLive.createXmlRadarLiveRequest(listCasoDeTestePlanilha.get(i));
+
+			solicitaRequestMotorCalcAntigoPlanilha(request);
+			
+			salvarXmlResponse(listCasoDeTestePlanilha.get(i).getCt(), pathEvidences)
+
+			selecionarPacotePorParcelaMotorCalcAntigoPlanilha(listCasoDeTestePlanilha.get(i));
+
+			solicitaRequestMotorCalcNovoPlanilha(request);
+			
+			salvarXmlResponse(listCasoDeTestePlanilha.get(i).getCt(),pathEvidences);
+			
+			selecionarPacotePorParcelaMotorCalcNovoPlanilha(listCasoDeTestePlanilha.get(i));
+
+			if(verificarSeOcorreuErro()){
+				finalizarDocumento();
+			}else{
+				validar(listCasoDeTestePlanilha.get(i));
+				finalizarDocumento();
+			}
+
+		}
+	}
+
+	public static criaUmNovoDocumentoPdf(String ct){
+		//def ct = issue_info.get(0).get("CT")
 		createDiretory(createDiretorypath+issue_info.get(0).get("topico") )
 		createDocument(ct, pathEvidences+issue_info.get(0).get("topico"))
 		createTitlePage()
@@ -71,27 +117,18 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 */
 	public static solicitaRequestMotorCalcAntigo(){
 		responseSoap(pathXML+issue_info.get(0).get("Diretório"), issue_info.get(0).get("URL"))
-		salvarXmlResponse(issue_info.get(0).get("CT"),pathEvidences)
+		//salvarXmlResponse(issue_info.get(0).get("CT"),pathEvidences)
 	}
 
-
-
-	public static realizaLeituraPlanilha(){
-		List<CasoDeTeste> listCasoDeTeste = auxiliares.WriteExcelFactory.readExcelFileToObjectCasoDeTeste(pathXML+issue_info.get(0).get("Diretório"));
-		for(int i=0; i<listCasoDeTeste.size();i++){
-			String request = auxiliares.CreateXMLRadarLive.createXmlRadarLiveRequest(listCasoDeTeste.get(i))
-			responseSoap = RequestSoap.requestStringXml(request, issue_info.get(0).get("URL"))
-			selecionarPacotePorParcelaMotorCalcAntigo()
-			responseSoap = RequestSoap.requestStringXml(request, issue_info.get(1).get("URL"))
-			selecionarPacotePorParcelaMotorCalcNovo()
-			validar()
-			
-		}
-		
+	/**
+	 * Luiz
+	 * Realiza o request SOAP no motor de calculo Antigo
+	 * Obs. verifica se existe mensagem de erro no response, caso exista é lançado uma exception.
+	 */
+	public static solicitaRequestMotorCalcAntigoPlanilha(String body){
+		System.out.println("[REALIZANDO REQUEST] - Motor de Calculo Antigo");
+		responseSoap(body, issue_info.get(0).get("URL"))
 	}
-
-
-
 
 	/**
 	 * Luiz
@@ -100,7 +137,18 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 */
 	public static solicitaRequestMotorCalcNovo(){
 		responseSoap(pathXML+issue_info.get(1).get("Diretório"), issue_info.get(1).get("URL"))
-		salvarXmlResponse(issue_info.get(0).get("CT"),pathEvidences)
+		//salvarXmlResponse(issue_info.get(0).get("CT"), pathEvidences)
+	}
+
+	/**
+	 * Luiz
+	 * Realiza o request SOAP no motor de calculo novo
+	 * Obs. verifica se existe mensagem de erro no response, caso exista é lançado uma exception.
+	 */
+	public static solicitaRequestMotorCalcNovoPlanilha(String body){
+		System.out.println("[REALIZANDO REQUEST] - Motor de Calculo Novo");
+		responseSoap(body, issue_info.get(1).get("URL"))
+		//salvarXmlResponse(issue_info.get(0).get("CT"), pathEvidences)
 	}
 
 	/**
@@ -108,11 +156,16 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 * @param diretorio
 	 * @param url
 	 * @return
-	 * Realisa o 'response' no 'Soap'
+	 * Realiza o 'response' no 'Soap'
 	 */
 	public static responseSoap(String diretorio, String url){
-		responseSoap = realizaRequestSoap(diretorio,url)
-		tratamentoErro()
+		try{
+			responseSoap = realizaRequestSoap(diretorio,url)
+			tratamentoErro()
+		}catch(Exception e){
+			System.err.println("Ocorreu um Erro no retorno do Web Service");
+			adicionaLinhaTextoNegrito(CotacaoWebService.pegarMensagensFault(retornaXmlToSOAPMessage()).get(0).getTipoMensagem());
+		}
 	}
 
 	/**
@@ -122,11 +175,24 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 */
 	public static tratamentoErro(){
 		if(tratamentoErro.hasErrorResponse(CotacaoWebService.pegarMensagens(retornaXmlToSOAPMessage()).get(0).getTipoMensagem())){
-			CotacaoWebService.carregaMensagens(retornaXmlToSOAPMessage())
-			salvarXmlResponse(issue_info.get(0).get("CT"),pathEvidences)
-			throw new AutomacaoException("Erro gerado no retorno do request Motor Calculo")
+			System.out.println("Erro gerado no retorno do Web Service.");
+			System.err.println(CotacaoWebService.pegarMensagens(retornaXmlToSOAPMessage()).get(0).getDescricao());
+			CotacaoWebService.adicionaPdfMensagemErroResponse(retornaXmlToSOAPMessage())
+			//salvarXmlResponse(issue_info.get(0).get("CT"), pathEvidences)
 		}
 	}
+
+
+
+	public static boolean verificarSeOcorreuErro(){
+
+		try{
+			return tratamentoErro.hasErrorResponse(CotacaoWebService.pegarMensagens(retornaXmlToSOAPMessage()).get(0).getTipoMensagem());
+		}catch(Exception e){
+			return true;
+		}
+	}
+
 
 	/**
 	 * 
@@ -136,7 +202,21 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 */
 	public static realizaRequestSoap(String diretorio, String url){
 		try{
-			responseSoap = RequestSoap.request(diretorio, url)
+			responseSoap = RequestSoap.requestStringXml(diretorio, url)
+		} catch (Exception e){
+			println "Erro ao Realizar o REQUEST";
+		}
+	}
+
+	/**
+	 *
+	 * @param diretorio
+	 * @param url
+	 * @return
+	 */
+	public static realizaRequestSoapPlanilha(String xml, String url){
+		try{
+			responseSoap = RequestSoap.request(xml, url)
 		} catch (Exception e){
 			//Falha ao chamar 'responseSoap'
 		}
@@ -153,16 +233,26 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 
 	public static selecionarPacotePorParcelaMotorCalcNovo(){
 		listMotorCalcNovo =	obterPacoteCoberturaList(issue_info.get(0).get("Pagamento"),issue_info.get(0).get("Parcela"))
-		mostraPacoteCoberturas(listMotorCalcNovo)
+		//mostraPacoteCoberturas(listMotorCalcNovo)
+	}
+	
+	public static selecionarPacotePorParcelaMotorCalcNovoPlanilha(CasoDeTeste casoDeTeste){
+		listMotorCalcNovo =	obterPacoteCoberturaList(casoDeTeste.getFormaDePagamento(), casoDeTeste.getParcela());
+
 	}
 
 
 	public static selecionarPacotePorParcelaMotorCalcAntigo(){
 
 		listMotorCalcAntigo = obterPacoteCoberturaList(issue_info.get(0).get("Pagamento"),issue_info.get(0).get("Parcela"))
-		mostraPacoteCoberturas(listMotorCalcAntigo)
+		//mostraPacoteCoberturas(listMotorCalcAntigo)
 	}
 
+	public static selecionarPacotePorParcelaMotorCalcAntigoPlanilha(CasoDeTeste casoDeTeste){
+
+		listMotorCalcAntigo = obterPacoteCoberturaList(casoDeTeste.getFormaDePagamento(), casoDeTeste.getParcela())
+
+	}
 
 	/**
 	 * @author Luiz André
@@ -183,6 +273,7 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 
 		return aux;
 	}
+	
 
 
 	/**
@@ -203,9 +294,8 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 		transformer.transform(xmlInput,
-				new StreamResult(new FileOutputStream(path+ "//"+"RadarLive"+"//"+ct+"_"+data+"_"+hora+".xml")));
+				new StreamResult(new FileOutputStream(path+ "//"+"RadarLive"+"//"+ct+"_RESPONSE_"+data+"_"+hora+".xml")));
 	}
-
 
 
 	/**
@@ -229,7 +319,7 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 
 			document.getDocumentElement().normalize();
 
-			System.out.println("Root element name :- " + document.getDocumentElement().getNodeName());
+			//System.out.println("Root element name :- " + document.getDocumentElement().getNodeName());
 
 
 			NodeList nodeListPacote = document.getElementsByTagName("pacote");
@@ -304,9 +394,15 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 					}
 				}
 
-				if(verificaDadosTable(pacote.getDescricaoPacote(), pacote.getFormaPagamento(), pacote.getQuantidadeParcelas()) == true){
+//				Validação Recebendo como parametros valores do BDD.
+//				if(verificaDadosTable(pacote.getDescricaoPacote(), pacote.getFormaPagamento(), pacote.getQuantidadeParcelas()) == true){
+//					listPacote.add(pacote);
+//				}
+				
+				if(pacote.getFormaPagamento().equals(pagamento) && pacote.getQuantidadeParcelas().equals(parcela)){
 					listPacote.add(pacote);
 				}
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -322,31 +418,31 @@ public class RadarLiveWebServiceFuncionalidades extends AutoComandos{
 	 * @return
 	 * Chama o metodo de validação do pacotes e coberturas
 	 */
-	public static boolean validar(){
+	public static boolean validar(CasoDeTeste casoDeTeste){
+		try{
+			validarPacotesCoberturasWebServiceRadarLive(listMotorCalcAntigo, listMotorCalcNovo)
+			adicionaTexto(statusValidacao(), "Radar Live - Validar requisições no serviço de gerar cotações.\n"+ "Cenário: "+casoDeTeste.getCt()+" - "+ casoDeTeste.getDescricaoCasoDeTeste())
+			adicionaLinhaTextoNegrito("Validação do request motor de cálculo antigo.")
+			addEmptyLineExterno(1)
+			adicionaLinhaTextoNegrito("Nº Operação : "+listMotorCalcAntigo.get(0).getNumeroOperacao()+ "     Nº Cotação: "+listMotorCalcAntigo.get(0).getNumeroCotacao())
+			adicionaLinhaTexto("Web Service URL: " + issue_info.get(0).get("URL"))
+			addEmptyLineExterno(1)
+			evidenciaPacotesCoberturas(listMotorCalcAntigo)
+			addEmptyLineExterno(1)
 
-		validarPacotesCoberturasWebServiceRadarLive(listMotorCalcAntigo, listMotorCalcNovo)
+			adicionaLinhaTextoNegrito("Validação do request motor de cálculo novo.")
+			addEmptyLineExterno(1)
+			adicionaLinhaTextoNegrito("Nº Operação : "+listMotorCalcNovo.get(0).getNumeroOperacao()+ "     Nº Cotação: "+ listMotorCalcNovo.get(0).getNumeroCotacao())
+			adicionaLinhaTexto("Web Service URL: " + issue_info.get(1).get("URL"))
+			addEmptyLineExterno(1)
+			evidenciaPacotesCoberturas(listMotorCalcNovo)
+			adicionaMessagem(mensagem.statusPacote, mensagem.mensagemPacote)
+			adicionaMessagem(mensagem.statusCobertura, mensagem.mensagemCobertura)
 
-
-		adicionaTexto(statusValidacao(), "Radar Live - Validar requisições no serviço de gerar cotações, no motor de cálculo de prêmios.")
-
-		adicionaLinhaTextoNegrito("Validação do request motor de cálculo antigo.")
-		addEmptyLineExterno(1)
-		adicionaLinhaTextoNegrito("Nº Operação : "+listMotorCalcAntigo.get(0).getNumeroOperacao()+ "     Nº Cotação: "+listMotorCalcAntigo.get(0).getNumeroCotacao())
-		adicionaLinhaTexto("Web Service URL: " + issue_info.get(0).get("URL"))
-		addEmptyLineExterno(1)
-		evidenciaPacotesCoberturas(listMotorCalcAntigo)
-		addEmptyLineExterno(1)
-
-		adicionaLinhaTextoNegrito("Validação do request motor de cálculo novo.")
-		addEmptyLineExterno(1)
-		adicionaLinhaTextoNegrito("Nº Operação : "+listMotorCalcNovo.get(0).getNumeroOperacao()+ "     Nº Cotação: "+ listMotorCalcNovo.get(0).getNumeroCotacao())
-		adicionaLinhaTexto("Web Service URL: " + issue_info.get(1).get("URL"))
-		addEmptyLineExterno(1)
-		evidenciaPacotesCoberturas(listMotorCalcNovo)
-		adicionaMessagem(mensagem.statusPacote, mensagem.mensagemPacote)
-		adicionaMessagem(mensagem.statusCobertura, mensagem.mensagemCobertura)
-
-		return execucao;
+			return execucao;
+		}catch(Exception e){
+			System.err.println("Ocorreu um erro na validação");
+		}
 	}
 
 	public static void validarPacotesCoberturasWebServiceRadarLive(List<Pacote> motorAntigo, List<Pacote> motorNovo){

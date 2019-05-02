@@ -249,7 +249,7 @@ public class AutoComandos extends GeneratorPDF{
 	public static createDiretory(String pathValue ){
 		File dir = new File(pathValue);
 		boolean result = dir.mkdirs();
-		System.out.println("mkdirs ["+result+"]");
+		//System.out.println("mkdirs ["+result+"]");
 	}
 
 	/**

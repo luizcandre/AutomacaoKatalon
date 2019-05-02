@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://drswbo05.allianz.com.br/V1_00_00/schemas" xmlns:ws="http://drswbo05.allianz.com.br/V1_00_00/ws">
   <soapenv:Body>
     <ws:cotacaoRequest>
@@ -8,7 +7,7 @@
         <sch:mediador>617120</sch:mediador>
       </sch:autenticacao>
       <sch:dadosFiscais>
-        <isentoIOF>false</isentoIOF>
+        <sch:isentoIOF>false</sch:isentoIOF>
       </sch:dadosFiscais>
       <sch:dadosGerais>
         <sch:dataInicio>2019-03-11</sch:dataInicio>
@@ -47,7 +46,7 @@
           <sch:categoriaRisco>261</sch:categoriaRisco>
           <sch:questionario>
             <sch:sexo>FEMININO</sch:sexo>
-            <sch:sexo>210</sch:sexo>
+            <sch:estadoCivil>210</sch:estadoCivil>
             <sch:tempoHabilitacao>941</sch:tempoHabilitacao>
             <sch:existeMenor25anos>1225</sch:existeMenor25anos>
             <sch:garagemFaculdade>250</sch:garagemFaculdade>

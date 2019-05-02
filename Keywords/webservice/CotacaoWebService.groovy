@@ -10,14 +10,14 @@ import org.w3c.dom.*;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteSource;
-
+import commands.AutoComandos
 import bean.CasoDeTeste
 import bean.Cobertura
 import bean.Pacote
 import bean.Proposta
 import bean.Mensagem
 
-public class CotacaoWebService extends Proposta{
+public class CotacaoWebService extends AutoComandos{
 
 	private static final String configFileFull = 'C:/Users/Public/QA_ALLIANZ/xml/pacotesfull.xml'
 	private static final String requestDominios = 'C:/Users/Public/QA_ALLIANZ/xml/dominios.xml'
@@ -37,7 +37,7 @@ public class CotacaoWebService extends Proposta{
 	public static List<Mensagem> pegarMensagens(SOAPMessage message){
 		try{
 			int numberNodes = getNumberOfNodes(message,"mensagem")
-			System.err.println("Number of Nodes by mensagem ["+numberNodes+"]\n")
+			//System.err.println("Number of Nodes by mensagem ["+numberNodes+"]\n")
 			List<Mensagem> mensagems = new ArrayList<Mensagem>()
 			for(int i = 0; i<numberNodes; i++){
 				Mensagem mensagem = new Mensagem()
@@ -45,6 +45,31 @@ public class CotacaoWebService extends Proposta{
 				mensagem.setTipoMensagem(getNodeValue(message, i,"tipoMensagem"))
 				mensagem.setDescricao(getNodeValue(message, i,"descricao"))
 				mensagems.add(mensagem)
+			}
+			return mensagems
+		} catch (IOException e){
+			throw new RuntimeException()
+		}
+
+	}
+
+	/**
+	 * @author T_DCDias
+	 * @return
+	 * Retorna lista de mensagens
+	 */
+	public static List<Mensagem> pegarMensagensFault(SOAPMessage message){
+		try{
+			int numberNodes = getNumberOfNodes(message,"soapenv:Fault")
+			//System.err.println("Number of Nodes by FAULT ["+numberNodes+"]\n")
+			List<Mensagem> mensagems = new ArrayList<Mensagem>()
+			for(int i = 0; i<numberNodes; i++){
+				Mensagem mensagem = new Mensagem()
+				mensagem.setCodigo(getNodeValue(message, i,"faultcode"))
+				mensagem.setTipoMensagem(getNodeValue(message, i,"faultstring"))
+				mensagem.setDescricao(getNodeValue(message, i,"detail"))
+				mensagems.add(mensagem)
+				System.err.println(getNodeValue(message, i,"faultstring"));
 			}
 			return mensagems
 		} catch (IOException e){
@@ -89,7 +114,7 @@ public class CotacaoWebService extends Proposta{
 	public static List<Cobertura> pegarCoberturas(SOAPMessage message){
 		try{
 			int numberNodes = getNumberOfNodes(message,"cobertura")
-			System.err.println("Number of Nodes by cobertura ["+numberNodes+"]\n")
+			//System.err.println("Number of Nodes by cobertura ["+numberNodes+"]\n")
 			List<Cobertura> coberturas = new ArrayList<Cobertura>()
 			for(int i = 0; i<numberNodes; i++){
 				Cobertura cobertura = new Cobertura()
@@ -258,7 +283,20 @@ public class CotacaoWebService extends Proposta{
 			System.err.println("Codigo ["+mensagens[i].getCodigo()
 					+"] Tipo Mnesagem ["+mensagens[i].getTipoMensagem()
 					+"] Descrição ["+mensagens[i].getDescricao()+"]")
+
 		}
+	}
+
+
+	public static adicionaPdfMensagemErroResponse(SOAPMessage message){
+		List<Mensagem> mensagens = pegarMensagens(message)
+		for(int i=0 ; i<mensagens.size();i++){
+			adicionaLinhaTextoNegrito("Codigo ["+mensagens[i].getCodigo()
+					+"] Tipo Mnesagem ["+mensagens[i].getTipoMensagem()
+					+"] Descrição ["+mensagens[i].getDescricao()+"]");
+
+		}
+
 	}
 }
 

@@ -18,6 +18,7 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 import internal.GlobalVariable
+import java.text.SimpleDateFormat
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.DataFormatter
@@ -335,7 +336,7 @@ public class WriteExcelFactory extends FileInput{
 	public static List<CasoDeTeste> readExcelFileToObjectCasoDeTeste(String caminho_arquivo_xlsx){
 
 		List<CasoDeTeste> listCasoDeTeste = new ArrayList<CasoDeTeste>();
-		String filePath = "C:\\Users\\Public\\QA_ALLIANZ\\xml\\massa_xml.xlsx";
+		String filePath = caminho_arquivo_xlsx;
 		try{
 			// Abrindo o arquivo e recuperando a planilha
 			FileInputStream file = new FileInputStream(new File(filePath));
@@ -348,122 +349,120 @@ public class WriteExcelFactory extends FileInput{
 				if (row.getRowNum() == 0) {
 					continue;
 				}
-					Iterator<?> cellIterator = row.cellIterator();
-					CasoDeTeste casoDeTeste = new CasoDeTeste();
+				Iterator<?> cellIterator = row.cellIterator();
+				CasoDeTeste casoDeTeste = new CasoDeTeste();
 
-					while (cellIterator.hasNext()) {
+				while (cellIterator.hasNext()) {
 
-						Cell cell = (Cell) cellIterator.next();
-						cell.setCellType(cell.CELL_TYPE_STRING);
+					Cell cell = (Cell) cellIterator.next();
+					cell.setCellType(cell.CELL_TYPE_STRING);
 
-						switch (cell.getColumnIndex()) {
-							case 0:
-								casoDeTeste.setUsuario(cell.getStringCellValue());
-								break;
-							case 1:
-								casoDeTeste.setParceiro(cell.getStringCellValue());
-								break;
-							case 2:
-								casoDeTeste.setMediador(cell.getStringCellValue());
-								break;
-							case 3:
-								casoDeTeste.setIsentoIOF(cell.getStringCellValue());
-								break;
-							case 4:
-								casoDeTeste.setDataInicio(cell.getStringCellValue());
-								break;
-							case 5:
-								casoDeTeste.setPercentualComissao(cell.getStringCellValue());
-								break;
-							case 6:
-								casoDeTeste.setPercentualDesconto(cell.getStringCellValue());
-								break;
-							case 7:
-								casoDeTeste.setNomeTomador(cell.getStringCellValue());
-								break;
-							case 8:
-								casoDeTeste.setDocumentoTomador(cell.getStringCellValue());
-								break;
-							case 9:
-								casoDeTeste.setNomeCondutor(cell.getStringCellValue());
-								break;
-							case 10:
-								casoDeTeste.setDocumentoCondutor(cell.getStringCellValue());
-								break;
-							case 11:
-								casoDeTeste.setDataNascimento(cell.getStringCellValue());
-								break;
-							case 12:
-								casoDeTeste.setChassi(cell.getStringCellValue());
-								break;
-							case 13:
-								casoDeTeste.setAnoModelo(cell.getStringCellValue());
-								break;
-							case 14:
-								casoDeTeste.setIsVeiculoUsado(cell.getStringCellValue());
-								break;
-							case 15:
-								casoDeTeste.setPlaca(cell.getStringCellValue());
-								break;
+					switch (cell.getColumnIndex()) {
+						case 0:
+							casoDeTeste.setUsuario(cell.getStringCellValue());
+							break;
+						case 1:
+							casoDeTeste.setParceiro(cell.getStringCellValue());
+							break;
+						case 2:
+							casoDeTeste.setMediador(cell.getStringCellValue());
+							break;
+						case 3:
+							casoDeTeste.setIsentoIOF(cell.getStringCellValue());
+							break;
+						case 4:
+							casoDeTeste.setDataInicio(cell.getStringCellValue());
+							break;
+						case 5:
+							casoDeTeste.setPercentualComissao(cell.getStringCellValue());
+							break;
+						case 6:
+							casoDeTeste.setPercentualDesconto(cell.getStringCellValue());
+							break;
+						case 7:
+							casoDeTeste.setNomeTomador(cell.getStringCellValue());
+							break;
+						case 8:
+							casoDeTeste.setDocumentoTomador(cell.getStringCellValue());
+							break;
+						case 9:
+							casoDeTeste.setNomeCondutor(cell.getStringCellValue());
+							break;
+						case 10:
+							casoDeTeste.setDocumentoCondutor(cell.getStringCellValue());
+							break;
+						case 11:
+							casoDeTeste.setDataNascimento(cell.getStringCellValue());
+							break;
+						case 12:
+							casoDeTeste.setChassi(cell.getStringCellValue());
+							break;
+						case 13:
+							casoDeTeste.setAnoModelo(cell.getStringCellValue());
+							break;
+						case 14:
+							casoDeTeste.setIsVeiculoUsado(cell.getStringCellValue());
+							break;
+						case 15:
+							casoDeTeste.setPlaca(cell.getStringCellValue());
+							break;
 
-							case 16:
-								casoDeTeste.setCodigoMarcaModelo(cell.getStringCellValue());
-								break;
-							case 17:
-								casoDeTeste.setCodigoFipe(cell.getStringCellValue());
-								break;
-							case 18:
-								casoDeTeste.setPercentualFipe(cell.getStringCellValue());
-								break;
-							case 19:
-								casoDeTeste.setCepPernoite(cell.getStringCellValue());
-								break;
-							case 20:
-								casoDeTeste.setTipoFranquia(cell.getStringCellValue());
-								break;
-							case 21:
-								casoDeTeste.setDispositivoAtual(cell.getStringCellValue());
-								break;
-							case 22:
-								casoDeTeste.setVeiculoBlindado(cell.getStringCellValue());
-								break;
-							case 23:
-								casoDeTeste.setDespesasExtraordinarias(cell.getStringCellValue());
-								break;
-							case 24:
-								casoDeTeste.setCategoriaRisco(cell.getStringCellValue());
-								break;
-							case 25:
-								casoDeTeste.setSexo(cell.getStringCellValue());
-								break;
-							case 26:
-								casoDeTeste.setEstadoCivil(cell.getStringCellValue());
-								break;
-							case 27:
-								casoDeTeste.setTempoHabilitacao(cell.getStringCellValue());
-								break;
-							case 28:
-								casoDeTeste.setExisteMenor25anos(cell.getStringCellValue());
-								break;
-							case 29:
-								casoDeTeste.setGaragemFaculdade(cell.getStringCellValue());
-								break;
-							case 30:
-								casoDeTeste.setGaragemResidencia(cell.getStringCellValue());
-								break;
-							case 31:
-								casoDeTeste.setGaragemTrabalho(cell.getStringCellValue());
-								break;
-							case 32:
-								casoDeTeste.setCondutorPrincipalResideEm(cell.getStringCellValue());
-								break;
-						}
-					
-
-
-
+						case 16:
+							casoDeTeste.setCodigoMarcaModelo(cell.getStringCellValue());
+							break;
+						case 17:
+							casoDeTeste.setCodigoFipe(cell.getStringCellValue());
+							break;
+						case 18:
+							casoDeTeste.setPercentualFipe(cell.getStringCellValue());
+							break;
+						case 19:
+							casoDeTeste.setCepPernoite(cell.getStringCellValue());
+							break;
+						case 20:
+							casoDeTeste.setTipoFranquia(cell.getStringCellValue());
+							break;
+						case 21:
+							casoDeTeste.setDispositivoAtual(cell.getStringCellValue());
+							break;
+						case 22:
+							casoDeTeste.setVeiculoBlindado(cell.getStringCellValue());
+							break;
+						case 23:
+							casoDeTeste.setDespesasExtraordinarias(cell.getStringCellValue());
+							break;
+						case 24:
+							casoDeTeste.setCategoriaRisco(cell.getStringCellValue());
+							break;
+						case 25:
+							casoDeTeste.setSexo(cell.getStringCellValue());
+							break;
+						case 26:
+							casoDeTeste.setEstadoCivil(cell.getStringCellValue());
+							break;
+						case 27:
+							casoDeTeste.setTempoHabilitacao(cell.getStringCellValue());
+							break;
+						case 28:
+							casoDeTeste.setExisteMenor25anos(cell.getStringCellValue());
+							break;
+						case 29:
+							casoDeTeste.setGaragemFaculdade(cell.getStringCellValue());
+							break;
+						case 30:
+							casoDeTeste.setGaragemResidencia(cell.getStringCellValue());
+							break;
+						case 31:
+							casoDeTeste.setGaragemTrabalho(cell.getStringCellValue());
+							break;
+						case 32:
+							casoDeTeste.setCondutorPrincipalResideEm(cell.getStringCellValue());
+							break;
 					}
-					listCasoDeTeste.add(casoDeTeste);
+
+
+				}
+				listCasoDeTeste.add(casoDeTeste);
 			}
 
 
@@ -478,6 +477,152 @@ public class WriteExcelFactory extends FileInput{
 	}
 
 
+
+
+	public static List<CasoDeTeste> readExcelFileToObjectCasoDeTesteRenovaSeguro(String caminho_arquivo_xlsx){
+
+		List<CasoDeTeste> listCasoDeTeste = new ArrayList<CasoDeTeste>();
+		String filePath = caminho_arquivo_xlsx;
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String dataAtual = format.format(new Date());
+
+		try{
+			// Abrindo o arquivo e recuperando a planilha
+			FileInputStream file = new FileInputStream(new File(filePath));
+			XSSFWorkbook workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet = workbook.getSheet("1211 - SN - Usado");
+			Iterator<?> rowIterator = sheet.rowIterator();
+			while (rowIterator.hasNext()) {
+				Row row = (Row) rowIterator.next();
+				// Descantando a primeira linha com o header
+				if (row.getRowNum() == 0) {
+					continue;
+				}
+				// Descantando a primeira linha com o header
+				if (row.getCell(1).getStringCellValue().contentEquals("Impedido")) {
+					continue;
+				}
+				Iterator<?> cellIterator = row.cellIterator();
+				CasoDeTeste casoDeTeste = new CasoDeTeste();
+
+				// Valores Fixos
+				casoDeTeste.setUsuario("BA262880");
+				casoDeTeste.setParceiro("BP002617");
+				casoDeTeste.setMediador("0617120");
+				//casoDeTeste.setIsentoIOF("false");
+				casoDeTeste.setDataInicio(dataAtual);
+				casoDeTeste.setNomeTomador("ROBO TOMADOR");
+				casoDeTeste.setNomeCondutor("ROBO CONDUTOR");
+				casoDeTeste.setDataNascimento("1974-06-18");
+				casoDeTeste.setTipoFranquia("REDUZIDA");
+				casoDeTeste.setDispositivoAtual("200");
+				casoDeTeste.setDespesasExtraordinarias("false");
+				casoDeTeste.setTempoHabilitacao("941");
+				casoDeTeste.setGaragemFaculdade("250");
+				casoDeTeste.setGaragemResidencia("232");
+				casoDeTeste.setGaragemTrabalho("240");
+
+				while (cellIterator.hasNext()) {
+
+					Cell cell = (Cell) cellIterator.next();
+					cell.setCellType(cell.CELL_TYPE_STRING);
+
+					switch (cell.getColumnIndex()) {
+						case 0:
+							casoDeTeste.setCt(cell.getStringCellValue());
+							break;
+						case 2:
+							casoDeTeste.setDescricaoCasoDeTeste(cell.getStringCellValue());
+							break;
+						case 5:
+							casoDeTeste.setDocumentoTomador(cell.getStringCellValue());
+							break;
+						case 6:
+							casoDeTeste.setSexo(cell.getStringCellValue());
+							break;
+						case 7:
+							casoDeTeste.setCepPernoite(cell.getStringCellValue());
+							break;
+						case 8:
+							if(cell.getStringCellValue().trim().equals("SIM")) {
+								casoDeTeste.setDocumentoCondutor(casoDeTeste.getDocumentoTomador());
+							}else {
+								casoDeTeste.setDocumentoCondutor(cell.getStringCellValue());
+							}
+							break;
+						case 9:
+							casoDeTeste.setEstadoCivil(cell.getStringCellValue());
+							break;
+						case 10:
+							casoDeTeste.setChassi(cell.getStringCellValue());
+							break;
+						case 11:
+							casoDeTeste.setPlaca(cell.getStringCellValue());
+							break;
+						case 12:
+							casoDeTeste.setAnoModelo(cell.getStringCellValue());
+							break;
+						case 13:
+							casoDeTeste.setCodigoMarcaModelo(cell.getStringCellValue());
+							break;
+						case 14:
+							casoDeTeste.setCodigoFipe(cell.getStringCellValue());
+							break;
+						case 15:
+							casoDeTeste.setCategoriaRisco(cell.getStringCellValue());
+							break;
+						case 16:
+							casoDeTeste.setIsVeiculoUsado(String.valueOf(cell.getStringCellValue().contentEquals("NÃO")));
+							break;
+						case 17:
+							casoDeTeste.setVeiculoBlindado(String.valueOf(cell.getStringCellValue().contentEquals("SIM")));
+							break;
+						case 18:
+							casoDeTeste.setExisteMenor25anos(cell.getStringCellValue());
+							break;
+						case 19:
+							casoDeTeste.setCondutorPrincipalResideEm(cell.getStringCellValue());
+							break;
+						case 22:
+							casoDeTeste.setPercentualDesconto(cell.getStringCellValue());
+							break;
+						case 23:
+							casoDeTeste.setPercentualAgravo(cell.getStringCellValue());
+							break;
+						case 24:
+							casoDeTeste.setPercentualComissao(cell.getStringCellValue());
+							break;
+						case 25:
+							casoDeTeste.setPercentualFipe(cell.getStringCellValue());
+							break;
+						case 27:
+							casoDeTeste.setFormaDePagamento(cell.getStringCellValue().trim());
+							break;
+						case 28:
+							casoDeTeste.setParcela(cell.getStringCellValue().trim());
+							break;
+						case 29:
+							casoDeTeste.setIsentoIOF(cell.getStringCellValue().trim());
+							break;
+					}
+
+
+
+				}
+				listCasoDeTeste.add(casoDeTeste);
+			}
+
+
+			file.close();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		//listCasoDeTeste.remove(0);
+		return listCasoDeTeste;
+	}
 
 
 

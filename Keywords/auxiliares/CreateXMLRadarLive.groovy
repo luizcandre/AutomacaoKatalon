@@ -1,37 +1,24 @@
 package auxiliares
 
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-
-import bean.CasoDeTeste
-import com.kms.katalon.core.annotation.Keyword
-import com.kms.katalon.core.checkpoint.Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testcase.TestCase
-import com.kms.katalon.core.testdata.TestData
-import com.kms.katalon.core.testobject.TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import javax.xml.transform.OutputKeys
+import javax.xml.transform.Transformer
+import javax.xml.transform.TransformerException
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
-import org.jdom2.output.Format;
+import org.jdom2.output.Format
 import org.jdom2.output.XMLOutputter;
 
-
-import internal.GlobalVariable
+import bean.CasoDeTeste
+import java.text.SimpleDateFormat
 
 public class CreateXMLRadarLive {
+
+	private static String pathEvidencia = "C:\\Users\\Public\\Evidencias\\RadarLive\\";
 
 	public static createXmlRadarLiveRequest(CasoDeTeste casoDeTeste){
 
@@ -74,7 +61,7 @@ public class CreateXMLRadarLive {
 		Element dadosFiscais = new Element("dadosFiscais", sch);
 		cotacaoRequest.addContent(dadosFiscais);
 
-		Element isentoIOF = new Element("isentoIOF");
+		Element isentoIOF = new Element("isentoIOF", sch);
 		isentoIOF.setText(casoDeTeste.getIsentoIOF());
 		dadosFiscais.addContent(isentoIOF);
 
@@ -85,11 +72,20 @@ public class CreateXMLRadarLive {
 		Element percentualComissao = new Element("percentualComissao", sch);
 		Element agravoDesconto = new Element("agravoDesconto", sch);
 		Element percentualDesconto = new Element("percentualDesconto", sch);
+		Element percentualAgravo = new Element("percentualAgravo", sch);
 
 		dataInicio.setText(casoDeTeste.getDataInicio());
 		percentualComissao.setText(casoDeTeste.getPercentualComissao());
-		percentualDesconto.setText(casoDeTeste.getPercentualDesconto());
-		agravoDesconto.addContent(percentualDesconto);
+
+
+		if(casoDeTeste.getPercentualAgravo() != "0"){
+			percentualAgravo.setText(casoDeTeste.getPercentualAgravo());
+			agravoDesconto.addContent(percentualAgravo);
+		}else{
+			percentualDesconto.setText(casoDeTeste.getPercentualDesconto());
+			agravoDesconto.addContent(percentualDesconto);
+		}
+
 
 		dadosGerais.addContent(dataInicio);
 		dadosGerais.addContent(percentualComissao);
@@ -109,7 +105,9 @@ public class CreateXMLRadarLive {
 		nomeTomador.setText(casoDeTeste.getNomeTomador());
 		documentoTomador.setText(casoDeTeste.getDocumentoTomador());
 		nomeCondutor.setText(casoDeTeste.getNomeCondutor());
+
 		documentoCondutor.setText(casoDeTeste.getDocumentoCondutor());
+
 		dataNascimento.setText(casoDeTeste.getDataNascimento());
 
 		dadosRisco.addContent(nomeTomador);
@@ -122,7 +120,6 @@ public class CreateXMLRadarLive {
 
 
 		//Nó DADOS DO VEÍCULO
-
 		Element veiculo = new Element("veiculo", sch);
 		Element chassi = new Element("chassi", sch);
 		Element anoModelo = new Element("anoModelo", sch);
@@ -154,8 +151,10 @@ public class CreateXMLRadarLive {
 
 		situacaoVeiculo.addContent(usado);
 		usado.addContent(isVeiculoUsado);
-		usado.addContent(placa);
 
+		if(casoDeTeste.getIsVeiculoUsado().contentEquals("false")){
+			usado.addContent(placa);
+		}
 		veiculo.addContent(chassi);
 		veiculo.addContent(anoModelo);
 		veiculo.addContent(situacaoVeiculo);
@@ -179,7 +178,7 @@ public class CreateXMLRadarLive {
 		Element categoriaRisco = new Element("categoriaRisco", sch);
 		Element questionario = new Element("questionario", sch);
 		Element sexo = new Element("sexo", sch);
-		Element estadoCivil = new Element("sexo", sch);
+		Element estadoCivil = new Element("estadoCivil", sch);
 		Element tempoHabilitacao = new Element("tempoHabilitacao", sch);
 		Element existeMenor25anos = new Element("existeMenor25anos", sch);
 		Element garagemFaculdade = new Element("garagemFaculdade", sch);
@@ -222,16 +221,57 @@ public class CreateXMLRadarLive {
 		try {
 			Format f = Format.getPrettyFormat();
 			f.setEncoding("UTF-8");
+			f.setOmitDeclaration(true);
 			xout.setFormat(f);
 
-			OutputStream out = new FileOutputStream(new File("exemplo.xml"));
+			OutputStream out = new FileOutputStream(new File(pathEvidencia + retornaNomeArquivoDataHoraXml(casoDeTeste.getCt())));
 			xout.output(doc, out);
-			xout.output(doc, System.out);
+			System.out.println("[GERADO BODY REQUEST XML] - CENÁRIO DE TESTE ["+casoDeTeste.getCt()+"]");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		return 	xout.outputString(doc);
+
+	}
+
+	public static String retornaNomeArquivoDataHoraXml(String ct){
+		Date dataHoraAtual = new Date();
+		String data = new SimpleDateFormat("ddMMyyyy").format(dataHoraAtual);
+		String hora = new SimpleDateFormat("HHmmss").format(dataHoraAtual);
+
+		String nomeArquivoFormatado = ct+"_REQUEST_"+"_"+data+"_"+hora+".xml"
+		return nomeArquivoFormatado;
+	}
+
+
+	public static String toString(Document doc) {
+		try {
+			StringWriter sw = new StringWriter();
+			TransformerFactory tf = TransformerFactory.newInstance();
+			Transformer transformer = tf.newTransformer();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
+			transformer.transform(new DOMSource(doc), new StreamResult(sw));
+			return sw.toString();
+		} catch (Exception ex) {
+			throw new RuntimeException("Error converting to String", ex);
+		}
+	}
+
+
+	public static String getStringFromDocument(Document doc) throws TransformerException {
+		DOMSource domSource = new DOMSource(doc);
+		StringWriter writer = new StringWriter();
+		StreamResult result = new StreamResult(writer);
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer = tf.newTransformer();
+		transformer.transform(domSource, result);
+		return writer.toString();
 	}
 
 }
